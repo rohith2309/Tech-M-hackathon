@@ -3,6 +3,7 @@ from flask import request
 from PIL import Image   
 import pytesseract
 import os
+from Generation import generate_summary
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
@@ -33,7 +34,8 @@ def index():
             
             # Process the image with OCR
             img = Image.open(image_path)
-            text = pytesseract.image_to_string(img)
+            gen = pytesseract.image_to_string(img)
+            text=generate_summary(gen)
             
             # Clean up - remove the temporary file
             os.remove(image_path)
